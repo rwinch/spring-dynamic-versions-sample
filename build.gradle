@@ -1,0 +1,19 @@
+plugins {
+	id 'java-library'
+	id 'io.spring.gradle.version.spring-dynamic-versions'
+}
+
+
+if (!project.hasProperty("reactorVersion")) {
+	ext.reactorVersion = "latest.release"
+}
+
+repositories {
+	maven { url "https://repo.spring.io/libs-snapshot" }
+}
+
+
+dependencies {
+	implementation platform("io.projectreactor:reactor-bom:$reactorVersion")
+	implementation "io.projectreactor:reactor-core"
+}

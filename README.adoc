@@ -1,0 +1,39 @@
+Try out https://github.com/rwinch/spring-dynamic-version-plugin[`io.spring.gradle.version.spring-dynamic-versions`].
+
+
+[source,bash]
+----
+mkdir test
+cd test
+git clone https://github.com/rwinch/spring-dynamic-versions-sample
+git clone https://github.com/rwinch/spring-dynamic-version-plugin
+cd spring-dynamic-versions-sample
+./gradlew dependencies --configuration runtimeClasspath --include-build ../spring-dynamic-version-plugin --refresh-dependencies
+----
+
+The output is:
+
+----
+...
+> Task :dependencies
+
+------------------------------------------------------------
+Root project
+------------------------------------------------------------
+
+runtimeClasspath - Runtime classpath of source set 'main'.
+[Aluminium-RELEASE, Aluminium-BUILD-SNAPSHOT, Aluminium-SR1, Aluminium-SR2, Aluminium-SR3, Bismuth-M1, Bismuth-M2, Bismuth-M3, Bismuth-M4, Bismuth-RC1, Bismuth-RELEASE, Bismuth-BUILD-SNAPSHOT, Bismuth-SR1, Bismuth-SR2, Bismuth-SR3, Bismuth-SR4, Bismuth-SR5, Bismuth-SR6, Bismuth-SR7, Bismuth-SR8, Bismuth-SR9, Bismuth-SR10, Bismuth-SR11, Bismuth-SR12, Bismuth-SR13, Bismuth-SR14, Bismuth-SR15, Bismuth-SR16, Bismuth-SR17, Californium-M1, Californium-M2, Californium-RC1, Californium-RELEASE, Californium-BUILD-SNAPSHOT, Californium-SR1, Californium-SR2, Californium-SR3, Californium-SR4, Californium-SR5, Californium-SR6, Californium-SR7, Californium-SR8, Californium-SR9, Californium-SR10, Californium-SR11, Californium-SR12, Californium-SR13, Californium-SR14, Dysprosium-M1, Dysprosium-M2, Dysprosium-M3, Dysprosium-RC1, Dysprosium-RELEASE, Dysprosium-BUILD-SNAPSHOT, Dysprosium-SR1, Dysprosium-SR2]
++--- io.projectreactor:reactor-bom:latest.release -> Dysprosium-RELEASE
+|    +--- io.projectreactor:reactor-core:3.3.0.RELEASE (c)
+|    \--- org.reactivestreams:reactive-streams:1.0.3 (c)
+\--- io.projectreactor:reactor-core -> 3.3.0.RELEASE
+     \--- org.reactivestreams:reactive-streams:1.0.3
+
+(c) - dependency constraint
+A web-based, searchable dependency report is available by adding the --scan option.
+
+BUILD SUCCESSFUL in 1s
+1 actionable task: 1 executed
+----
+
+Notice that the https://github.com/rwinch/spring-dynamic-version-plugin/blob/70fb042a5f633f56a3a7e7157329762401dcf235/src/main/java/io/spring/gradle/version/order/SpringVersionLister.java#L68[dependency versions] are sorted so that `Dysprosium-SR2` is last. However, the output of dependencies is `io.projectreactor:reactor-bom:latest.release -> Dysprosium-RELEASE`.
